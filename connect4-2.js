@@ -75,12 +75,12 @@ class Game {
     }
 
     endGame(msg) {
-
         const top = document.querySelector("#column-top");
         top.removeEventListener("click", this.handleClick);
-        alert(msg);
-    //     document.getElementById('p1Color').value="";
-    //    document.getElementById('p2Color').value="";
+        const annWinner=document.getElementById('Winner-Announcer');
+        annWinner.innerHTML=msg;
+        // alert(msg);
+    
     }
 
     handleClick(evt) {
@@ -98,18 +98,20 @@ class Game {
             this.board[y][x] = Object.values(this.currPlayer)[0];
             this.placeInTable(y, x);
         } else {
-            alert("Game is over, start a new game!")
+            alert("Game is over!, Choose new Player Colors then hit start a new game!")
         }
         // check for win
         if (this.checkForWin()) {
+            document.getElementById('p1Color').value="#ff0000";
+            document.getElementById('p2Color').value="#0000ff"; 
             this.gameOver = true;
-            return this.endGame(`Player ${ Object.keys(this.currPlayer)[0]} won!`);
+            return this.endGame(`Game is over! ${ Object.keys(this.currPlayer)[0]} won!, Choose new Game Colors then hit start a new game!`);
         }
 
         // check for tie
         if (this.board.every(row => row.every(cell => cell))) {
             this.gameOver = true;
-            return this.endGame('Tie!');
+            return this.endGame('Tie! Try Again!');
         }
       
         // switch players
@@ -159,6 +161,8 @@ class Game {
 
 const startBtn = document.querySelector("#btnStart");
 startBtn.addEventListener('click', () => {
+    const annWinner=document.getElementById('Winner-Announcer');
+        annWinner.innerHTML="";
     const Player1Color=document.getElementById('p1Color').value;
     const Player2Color=document.getElementById('p2Color').value; 
     const p1 = new Player(Player1Color);
